@@ -1,0 +1,31 @@
+,
+        {
+            "entityName": "Product",
+            "tableName": "products",
+            "fields": [
+                {
+                    "fieldName": "productId",
+                    "type": "Integer",
+                    "key": true,
+                    "nullAble": false
+                },
+                {
+                    "fieldName": "productName",
+                    "type": "String",
+                    "key": false,
+                    "nullAble": false
+                },
+                {
+                    "fieldName": "category",
+                    "type": "String",
+                    "key": false,
+                    "nullAble": true
+                },
+                {
+                    "fieldName": "description",
+                    "type": "String",
+                    "key": false,
+                    "nullAble": true
+                }
+            ]
+        }

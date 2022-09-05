@@ -1,0 +1,23 @@
+{
+  "name": "generator-saturday",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "files": [
+    "generators"
+  ],
+  "scripts": {
+    "test": "npm run test:unit -- test/**/*.spec.js test/*.spec.js --no-insight",
+    "test:unit": "mocha --timeout 30000 --slow 0 --reporter spec"
+  },
+  "author": "ranodlph.diep",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "lodash": "^4.17.21",
+    "yeoman-generator": "^5.7.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  }
+}

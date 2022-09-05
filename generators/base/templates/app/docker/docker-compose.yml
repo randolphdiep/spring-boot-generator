@@ -1,0 +1,64 @@
+version: "3"
+services:
+
+<%_ if (databaseType === 'mysql') { _%>
+  mysqldb:
+    container_name: mysql-db
+    image: mysql:5
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=<%= databaseName%>
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - mysql-data:/var/lib/mysql
+<%_ } _%>
+<%_ if (databaseType === 'postgresql') { _%>
+  postgresqldb:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=appuser
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=<%= databaseName%>
+    ports:
+      - "5432:5432"
+<%_ } _%>
+<%_ if (databaseType === 'mariadb') { _%>
+  mariadb:
+    image: mariadb:10.8.2
+    environment:
+      - MYSQL_DATABASE=<%= databaseName%>
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+<%_ } _%>
+  php-my-admin:
+    image: phpmyadmin
+    restart: always
+    container_name: php-my-admin
+    ports:
+      - 80:80
+    environment:        
+      PMA_HOST: mysql-db
+      MYSQL_ROOT_PASSWORD: 123456
+      PMA_USER: root
+      PMA_PASSWORD:     
+
+  backend:
+    container_name: student-management
+    image: backend:latest 
+    restart: always
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysqldb
+  
+volumes:
+  mysql-data:
+    

@@ -1,0 +1,70 @@
+{
+    "appName": "provip",
+    "packageName": "com.hello.provip",
+    "packageFolder": "com/hello/provip",
+    "databaseType": "mysql",
+    "databaseName": "appdb",
+    "buildTool": "maven",
+    "JAVA_VERSION" : 17,
+    "SPRING_BOOT_VERSION" : "2.6.7",
+    "DEFAULT_APP_VERSION" : "0.0.1-SNAPSHOT",
+    "entities": [
+        {
+            "entityName": "User",
+            "tableName": "users",
+            "fields": [
+                {
+                    "fieldName": "userId",
+                    "type": "Integer",
+                    "key": true,
+                    "nullAble": false
+                },
+                {
+                    "fieldName": "userName",
+                    "type": "String",
+                    "key": false,
+                    "nullAble": false
+                },
+                {
+                    "fieldName": "password",
+                    "type": "String",
+                    "key": false,
+                    "nullAble": true
+                }
+            ]
+        },
+        {
+            "entityName": "Product",
+            "tableName": "products",
+            "fields": [
+                {
+                    "fieldName": "productId",
+                    "type": "Integer",
+                    "key": true,
+                    "nullAble": false
+                },
+                {
+                    "fieldName": "productName",
+                    "type": "String",
+                    "key": false,
+                    "nullAble": false
+                },
+                {
+                    "fieldName": "category",
+                    "type": "String",
+                    "key": false,
+                    "nullAble": true
+                },
+                {
+                    "fieldName": "description",
+                    "type": "String",
+                    "key": false,
+                    "nullAble": true
+                }
+            ]
+        }
+    ]
+}
+
+
+

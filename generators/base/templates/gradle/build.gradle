@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.owasp:dependency-check-gradle:${owasp_plugin_version}"
+    }
+}
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java-library'
+}
+apply from: "gradle/code-quality.gradle"
+if (project.hasProperty("ci")) {
+    apply from: "gradle/owasp.gradle"
+}
+
+group = '<%= packageName %>'
+version = '<%= DEFAULT_APP_VERSION %>'
+sourceCompatibility = <%= JAVA_VERSION %>
+targetCompatibility = <%= JAVA_VERSION %>
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+    <%_ if (databaseType === 'mysql') { _%>
+    runtimeOnly 'mysql:mysql-connector-java'
+    <%_ } _%>
+    <%_ if (databaseType === 'postgresql') { _%>
+    runtimeOnly 'org.postgresql:postgresql'
+    <%_ } _%>
+    <%_ if (databaseType === 'mariadb') { _%>
+    runtimeOnly "org.mariadb.jdbc:mariadb-java-client"
+    <%_ } _%>
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.projectlombok:lombok"
+    <%_ if (databaseType === 'mysql') { _%>
+    testImplementation "org.testcontainers:mysql"
+    <%_ } _%>
+    <%_ if (databaseType === 'postgresql') { _%>
+    testImplementation "org.testcontainers:postgresql"
+    <%_ } _%>
+    <%_ if (databaseType === 'mariadb') { _%>
+    testImplementation "org.testcontainers:mariadb"
+    <%_ } _%>
+}
+bootBuildImage {
+    imageName = "DOCKER_USERNAME/<%= appName %>"
+}
+
+
+
